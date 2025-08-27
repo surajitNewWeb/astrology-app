@@ -8,7 +8,7 @@ session_start();
   <meta charset="utf-8">
   <title>AstroGuide — Home</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./public/assets/css/bootstrap.min.css">
   <style>
     :root {
       --bg: #0a0e1a;
@@ -590,14 +590,14 @@ session_start();
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Header -->
-  <?php include __DIR__ . '/../shared/navbar.php'; ?>
+  <?php include __DIR__ . '../includes/navbar.php'; ?>
 
   <!-- HERO with video -->
   <section class="hero" aria-label="Hero">
     <!-- background video (muted autoplay loop; include poster fallback) -->
-    <video id="bg-video" autoplay muted loop playsinline poster="../assets/images/hero-poster.jpg" preload="auto"
+    <video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg" preload="auto"
       aria-hidden="true">
-      <source src="../assets/videos/hero2.mp4" type="video/mp4">
+      <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
       <!-- optionally add webm -->
       <!-- <source src="../assets/videos/hero.webm" type="video/webm"> -->
       Your browser does not support HTML5 video.
@@ -639,17 +639,17 @@ session_start();
     <h2 class="section-title">Our Features 🔮</h2>
     <div class="grid-3">
       <div class="feature">
-        <img src="../assets/images/horoscope.jpg" alt="Horoscope">
+        <img src="./public/assets/images/horoscope.jpg" alt="Horoscope">
         <h5>Daily Horoscope</h5>
         <p>Accurate & personalized predictions updated every single day.</p>
       </div>
       <div class="feature">
-        <img src="../assets/images/kundali.jpg" alt="Kundli">
+        <img src="./public/assets/images/kundali.jpg" alt="Kundli">
         <h5>Kundli Generator</h5>
         <p>Generate detailed birth charts with planetary positions & insights.</p>
       </div>
       <div class="feature">
-        <img src="../assets/images/matchmaking.jpg" alt="Love">
+        <img src="./public/assets/images/matchmaking.jpg" alt="Love">
         <h5>Matchmaking</h5>
         <p>Check compatibility & love predictions with your partner instantly.</p>
       </div>
@@ -678,21 +678,21 @@ session_start();
     <h2 class="section-title">Astrology Insights 📝</h2>
     <div class="blog-grid">
       <div class="blog-card">
-        <img src="../assets/images/moonsign.jpg" alt="Zodiac Blog">
+        <img src="./public/assets/images/moonsign.jpg" alt="Zodiac Blog">
         <div class="blog-card-body">
           <h6>5 Things to Know About Your Moon Sign</h6>
           <p>Understanding your emotions & inner self through your moon placement.</p>
         </div>
       </div>
       <div class="blog-card">
-        <img src="../assets/images/Astrology.jpg" alt="Astro Tips">
+        <img src="./public/assets/images/Astrology.jpg" alt="Astro Tips">
         <div class="blog-card-body">
           <h6>Astrology & Career Choices</h6>
           <p>Which zodiac signs thrive in leadership, creativity, or service roles?</p>
         </div>
       </div>
       <div class="blog-card">
-        <img src="../assets/images/Love.jpg" alt="Love">
+        <img src="./public/assets/images/Love.jpg" alt="Love">
         <div class="blog-card-body">
           <h6>Love & Compatibility in 2025</h6>
           <p>Check which signs are most aligned for long-term relationships this year.</p>
@@ -718,7 +718,7 @@ $zodiacs = [
 ];
 foreach($zodiacs as $file => $name){
   echo "<div class='zodiac-item'>
-          <img src='../assets/images/zodiac-icons/$file.jpg' alt='$name'>
+          <img src='./public/assets/images/zodiac-icons/$file.jpg' alt='$name'>
           <div><strong>$name</strong></div>
         </div>";
 }
@@ -729,17 +729,17 @@ foreach($zodiacs as $file => $name){
       <h2 class="section-title">Astrology Tips & Guides 🌟</h2>
       <div class="grid-3">
         <div class="feature">
-          <img src="../assets/images/daily-retuals.jpg" alt="Tip 1">
+          <img src="./public/assets/images/daily-retuals.jpg" alt="Tip 1">
           <h5>Daily Rituals</h5>
           <p>Small daily practices that align your energy with the cosmos.</p>
         </div>
         <div class="feature">
-          <img src="../assets/images/moon-phase.jpg" alt="Tip 2">
+          <img src="./public/assets/images/moon-phase.jpg" alt="Tip 2">
           <h5>Moon Phases</h5>
           <p>Learn how to use lunar cycles to plan and manifest effectively.</p>
         </div>
         <div class="feature">
-          <img src="../assets/images/plantry-insight.jpg" alt="Tip 3">
+          <img src="./public/assets/images/plantry-insight.jpg" alt="Tip 3">
           <h5>Planetary Insights</h5>
           <p>Understand how each planet affects your daily life and decisions.</p>
         </div>
