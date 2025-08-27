@@ -1,0 +1,38 @@
+
+    :root {
+      --bg: #0a0e1a;
+      --surface: #1a1f2e;
+      --surface-light: #252b3d;
+      --primary: #6366f1;
+      /* modern indigo */
+      --primary-light: #818cf8;
+      --accent: #f59e0b;
+      /* warm amber */
+      --accent1: #ec4899;
+      /* vibrant pink */
+      --accent2: #10b981;
+      /* emerald green */
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --sky: #0ea5e9;
+      /* bright sky blue */
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+        /* base */
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, -apple-system, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+    }
