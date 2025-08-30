@@ -1,59 +1,57 @@
 <?php
-// backend/helpers.php
-declare(strict_types=1);
-
 require_once __DIR__ . '/../config/config.php';
 
-function e(string $v): string { return htmlspecialchars($v, ENT_QUOTES, 'UTF-8'); }
+/**
+ * Get Access Token from Prokerala API
+ */
+function getProkeralaAccessToken() {
+    $clientId = PROKERALA_CLIENT_ID;
+    $clientSecret = PROKERALA_CLIENT_SECRET;
+    $tokenUrl = PROKERALA_TOKEN_URL;
 
-function redirect(string $path): void {
-    header("Location: $path");
-    exit;
-}
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $tokenUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        "grant_type" => "client_credentials",
+        "client_id" => $clientId,
+        "client_secret" => $clientSecret
+    ]));
 
-function hash_password(string $plain): string {
-    return password_hash($plain, PASSWORD_DEFAULT);
-}
+    $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        throw new Exception("cURL error: " . curl_error($ch));
+    }
+    curl_close($ch);
 
-function verify_password(string $plain, string $hash): bool {
-    return password_verify($plain, $hash);
-}
-
-function require_login(): void {
-    if (!isset($_SESSION['user'])) redirect('/public/login.php');
-}
-
-function current_user_id(): ?int {
-    return $_SESSION['user']['id'] ?? null;
+    $data = json_decode($response, true);
+    if (!isset($data['access_token'])) {
+        throw new Exception("Failed to retrieve access token: " . $response);
+    }
+    return $data['access_token'];
 }
 
 /**
- * Very simple sun-sign calc (Western) from month/day.
- * You can replace with API if needed.
+ * Generic API request to Prokerala
  */
-function zodiac_from_date(string $dob): string {
-    [$y,$m,$d] = array_map('intval', explode('-', $dob));
-    $md = (int)($m * 100 + $d);
-    return match (true) {
-        $md >= 321 && $md <= 419 => 'aries',
-        $md >= 420 && $md <= 520 => 'taurus',
-        $md >= 521 && $md <= 620 => 'gemini',
-        $md >= 621 && $md <= 722 => 'cancer',
-        $md >= 723 && $md <= 822 => 'leo',
-        $md >= 823 && $md <= 922 => 'virgo',
-        $md >= 923 && $md <= 1022 => 'libra',
-        $md >= 1023 && $md <= 1121 => 'scorpio',
-        $md >= 1122 && $md <= 1221 => 'sagittarius',
-        ($md >= 1222 && $md <= 1231) || ($md >= 101 && $md <= 119) => 'capricorn',
-        $md >= 120 && $md <= 218 => 'aquarius',
-        $md >= 219 && $md <= 320 => 'pisces',
-        default => 'aries',
-    };
-}
+function prokeralaApiRequest($endpoint, $params = []) {
+    $token = getProkeralaAccessToken();
 
-function json_out($data, int $code = 200): void {
-    http_response_code($code);
-    header('Content-Type: application/json');
-    echo json_encode($data);
-    exit;
+    $url = $endpoint . '?' . http_build_query($params);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer $token"
+    ]);
+
+    $response = curl_exec($ch);
+    if (curl_errno($ch)) {
+        throw new Exception("cURL error: " . curl_error($ch));
+    }
+    curl_close($ch);
+
+    return $response;
 }

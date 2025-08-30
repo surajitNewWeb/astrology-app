@@ -1,222 +1,213 @@
 <?php
-session_start();
+// Include navbar
+require_once __DIR__ . '/includes/navbar.php';
 ?>
-<!doctype html>
-<html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>AstroGuide — Home</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="./public/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./public/assets/css/style.css">
-</head>
+<style>
+/* --- BASE --- */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #0a0e1a;
+    color: #f8fafc;
+}
+a { text-decoration: none; }
 
-<body>
+/* --- HERO --- */
+.hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+#bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.35) contrast(1.1) saturate(1.2);
+    z-index: 0;
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05), transparent 70%);
+    z-index: 1;
+    pointer-events: none;
+}
+.hero-panel {
+    position: relative;
+    z-index: 2;
+    max-width: 1080px;
+    width: calc(100% - 48px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 25px;
+    padding: 36px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,215,0,0.3);
+    backdrop-filter: blur(16px) saturate(180%);
+}
+.hero-left { flex: 1; }
+.hero-right { width: 320px; display: flex; align-items: center; justify-content: center; }
+.gradient-text {
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    background: linear-gradient(135deg,#ffd700,#ffec8b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+.hero p.lead { color: #cbd5e1; font-size: 1.05rem; margin: 12px 0 18px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+.btn-cta { padding: 12px 28px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; }
+.btn-primary { background: #ffd70000; color: #ffffff; border: 2px solid #ffcb00; }
+.btn-outline { background: transparent; border: 2px solid #ffd700; color: #ffd700; }
+.btn-solid { background: #1a1f2e; border: 2px solid #ffd700; color: #ffd700; }
+.btn-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,215,0,0.4); }
+.panel-card { background: rgba(255,255,255,0.08); border-radius:20px; padding:25px; backdrop-filter:blur(10px); border:1px solid rgba(255,215,0,0.3); transition:transform 0.4s ease;}
+.panel-card:hover { transform:translateY(-5px); box-shadow:0 15px 40px rgba(255,215,0,0.4);}
+.quick-features { display:flex; gap:18px; flex-wrap:wrap; color:#ffd700; margin-top:16px; }
 
-  <a class="skip-link" href="#main">Skip to content</a>
+/* --- MAIN --- */
+main { max-width:1200px; margin:0 auto; padding:60px 20px; }
+.section-title { text-align:center; font-size:2rem; font-weight:700; margin-bottom:40px; color:white; }
+.grid-3 { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+.feature { background:#111827; border-radius:16px; padding:28px; text-align:center; border:1px solid rgba(255,255,255,0.05); transition:all 0.3s ease;}
+.feature:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(255,215,0,0.4); border-color:#ffd700;}
+.feature img { width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:12px;}
+.feature h5 { color:#ffd700; font-weight:700; margin-bottom:8px;}
+.feature p { color:#cbd5e1; font-size:0.95rem; }
 
-  <!-- Header -->
-  <?php include __DIR__ . '../includes/navbar.php'; ?>
+/* --- TESTIMONIALS --- */
+.testimonials { padding:60px 20px; text-align:center; background:#101829; color:white; border-radius:20px; margin:60px 0; border:1px solid rgba(255,215,0,0.2);}
+.testimonial-card { background:#111827; border:1px solid rgba(255,215,0,0.2); border-radius:16px; padding:24px; margin:10px; backdrop-filter:blur(10px); transition: transform 0.3s ease;}
+.testimonial-card:hover { transform:translateY(-5px);}
+.testimonial-card p { font-style:italic; color:rgba(255,255,255,0.95);}
+.testimonial-card strong { display:block; margin-top:8px; color:#ffd700; }
 
-  <!-- HERO with video -->
-  <section class="hero" aria-label="Hero">
-    <!-- background video (muted autoplay loop; include poster fallback) -->
-    <video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg" preload="auto"
-      aria-hidden="true">
-      <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
-      <!-- optionally add webm -->
-      <!-- <source src="../assets/videos/hero.webm" type="video/webm"> -->
-      Your browser does not support HTML5 video.
-    </video>
+/* --- BLOG --- */
+.blog-grid { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
+.blog-card { background:#111827; border-radius:16px; overflow:hidden; transition:all 0.3s ease; border:1px solid rgba(255,255,255,0.05);}
+.blog-card:hover { transform:translateY(-8px); border-color:#ffd700; box-shadow:0 15px 40px rgba(255,215,0,0.3);}
+.blog-card img { width:100%; height:180px; object-fit:cover; }
+.blog-card-body { padding:20px; }
+.blog-card-body h6 { color:#ffd700; font-weight:700; margin-bottom:8px; }
+.blog-card-body p { font-size:0.95rem; color:#cbd5e1; }
 
-    <div class="hero-overlay" aria-hidden="true"></div>
+/* --- ZODIAC --- */
+.zodiac-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:20px; }
+.zodiac-item { background:#111827; padding:16px; border-radius:16px; text-align:center; transition: all 0.3s ease; border:1px solid rgba(255,255,255,0.05);}
+.zodiac-item:hover { transform:scale(1.05); box-shadow:0 15px 40px rgba(255,215,0,0.4); border-color:#ffd700;}
+.zodiac-item img { width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:8px; }
 
-    <div class="hero-panel container">
-      <div class="hero-left">
-        <h1>Discover your cosmic path — daily guidance & natal charts</h1>
-        <p class="lead">Fast personalized horoscopes, accurate birth charts, and compatibility reports — made simple &
-          beautiful.</p>
+/* --- SUBSCRIBE --- */
+.subscribe-section { background:#111827; padding:60px 20px; border-radius:20px; color:white; margin:60px 0; text-align:center; border:1px solid rgba(255,215,0,0.2);}
+.subscribe-section h2 { margin-bottom:12px; color:#ffd700;}
+.subscribe-section p { margin-bottom:24px; color:rgba(255,255,255,0.9);}
+.subscribe-form { display:flex; justify-content:center; flex-wrap:wrap; gap:12px;}
+.subscribe-form input { padding:14px 18px; border-radius:12px; border:1px solid rgba(255,215,0,0.3); background:#0a0e1a; color:white; flex:1; min-width:250px; max-width:350px;}
+.subscribe-form button { padding:14px 28px; border-radius:12px; border:none; font-weight:700; cursor:pointer; background:#ffd70000; color:#ffffff; border:2px solid #ffcb00;}
+.subscribe-form button:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(255,223,0,0.4); }
 
-        <div class="cta-row">
-          <button class="btn-cta btn-primary" onclick="location.href='horoscope.php'">Get My Horoscope</button>
-          <button class="btn-cta btn-outline" onclick="location.href='kundli.php'">Generate Kundli</button>
-          <button class="btn-cta btn-solid" onclick="location.href='matchmaking.php'">Matchmaking</button>
-        </div>
+/* --- FOOTER --- */
+footer { padding:32px 20px; text-align:center; color:#94a3b8; font-size:0.95rem; background:#0a0e1a; border-top:1px solid rgba(255,255,255,0.05);}
+footer a { color:#ffd700; transition:0.3s; }
+footer a:hover { color:white; }
 
-        <div class="quick-features" aria-hidden="true">
-          <div class="item">✨ Daily updates</div>
-          <div class="item">📜 Accurate charts</div>
-          <div class="item">💞 Compatibility</div>
-        </div>
-      </div>
+/* --- RESPONSIVE --- */
+@media(max-width:992px){.hero-panel{flex-direction:column;gap:20px;}.hero-right{width:100%;}}
+@media(max-width:560px){.hero{min-height:56vh;padding:48px 0;}.hero-left{text-align:center;}.quick-features{justify-content:center;}}
+@media(max-width:768px){.zodiac-strip{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.zodiac-strip{grid-template-columns:1fr;}}
+</style>
 
-      <div class="hero-right">
-        <div class="panel-card" role="region" aria-label="Today highlights">
-          <h4>Today's Highlights</h4>
-          <p><strong>Lucky Color:</strong> Teal · <strong>Lucky Number:</strong> 7</p>
-          <p style="margin-top:10px; font-size:0.95rem; color:rgba(255,255,255,0.95)">Quick insight: Favor conversations
-            and new ideas — the moon supports clarity.</p>
-        </div>
-      </div>
+<!-- HERO -->
+<section class="hero">
+<video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg">
+    <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
+</video>
+<div class="hero-overlay"></div>
+<div class="hero-panel container">
+<div class="hero-left">
+    <h1 class="gradient-text">Discover Your Cosmic Path — Daily Guidance & Natal Charts</h1>
+    <p class="lead">Fast personalized horoscopes, accurate birth charts, and compatibility reports — made simple & beautiful.</p>
+    <div class="cta-row">
+        <button class="btn-cta btn-primary" onclick="location.href='horoscope.php'">Get My Horoscope</button>
+        <button class="btn-cta btn-outline" onclick="location.href='kundli.php'">Generate Kundli</button>
+        <button class="btn-cta btn-solid" onclick="location.href='matchmaking.php'">Matchmaking</button>
     </div>
-  </section>
-  <!-- Features -->
-  <main>
-    <h2 class="section-title">Our Features 🔮</h2>
-    <div class="grid-3">
-      <div class="feature">
-        <img src="./public/assets/images/horoscope.jpg" alt="Horoscope">
-        <h5>Daily Horoscope</h5>
-        <p>Accurate & personalized predictions updated every single day.</p>
-      </div>
-      <div class="feature">
-        <img src="./public/assets/images/kundali.jpg" alt="Kundli">
-        <h5>Kundli Generator</h5>
-        <p>Generate detailed birth charts with planetary positions & insights.</p>
-      </div>
-      <div class="feature">
-        <img src="./public/assets/images/matchmaking.jpg" alt="Love">
-        <h5>Matchmaking</h5>
-        <p>Check compatibility & love predictions with your partner instantly.</p>
-      </div>
+    <div class="quick-features">
+        <div>✨ Daily updates</div>
+        <div>📜 Accurate charts</div>
+        <div>💞 Compatibility</div>
     </div>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-      <h2>What People Say ✨</h2>
-      <div class="d-flex flex-wrap justify-content-center">
-        <div class="testimonial-card col-md-3">
-          <p>"AstroGuide gave me so much clarity about my career choices. Spot on!"</p>
-          <strong>– Priya, Mumbai</strong>
-        </div>
-        <div class="testimonial-card col-md-3">
-          <p>"The Kundli generator is so beautiful & accurate. Love the design!"</p>
-          <strong>– Rahul, Delhi</strong>
-        </div>
-        <div class="testimonial-card col-md-3">
-          <p>"The love compatibility feature was fun and surprisingly true 😍."</p>
-          <strong>– Ayesha, Dubai</strong>
-        </div>
-      </div>
-    </section>
-
-    <!-- Blog / Insights -->
-    <h2 class="section-title">Astrology Insights 📝</h2>
-    <div class="blog-grid">
-      <div class="blog-card">
-        <img src="./public/assets/images/moonsign.jpg" alt="Zodiac Blog">
-        <div class="blog-card-body">
-          <h6>5 Things to Know About Your Moon Sign</h6>
-          <p>Understanding your emotions & inner self through your moon placement.</p>
-        </div>
-      </div>
-      <div class="blog-card">
-        <img src="./public/assets/images/Astrology.jpg" alt="Astro Tips">
-        <div class="blog-card-body">
-          <h6>Astrology & Career Choices</h6>
-          <p>Which zodiac signs thrive in leadership, creativity, or service roles?</p>
-        </div>
-      </div>
-      <div class="blog-card">
-        <img src="./public/assets/images/Love.jpg" alt="Love">
-        <div class="blog-card-body">
-          <h6>Love & Compatibility in 2025</h6>
-          <p>Check which signs are most aligned for long-term relationships this year.</p>
-        </div>
-      </div>
+</div>
+<div class="hero-right">
+    <div class="panel-card">
+        <h4 style="color:#ffd700;">Today's Highlights</h4>
+        <p><strong>Lucky Color:</strong> Teal · <strong>Lucky Number:</strong> 7</p>
+        <p style="margin-top:10px; font-size:0.95rem;">Quick insight: Favor conversations and new ideas — the moon supports clarity.</p>
     </div>
+</div>
+</div>
+</section>
 
-    <!-- Call to Action Band -->
-    <div class="cta-band">
-      <h2>Ready to Explore Your Stars? 🌠</h2>
-      <p>Get your personalized horoscope, detailed Kundli & love compatibility in seconds.</p>
-      <button class="btn-cta btn-primary" onclick="location.href='matchmaking.php'">Start Now</button>
-    </div>
+<!-- FEATURES -->
+<main id="main">
+<h2 class="section-title">Our Features 🔮</h2>
+<div class="grid-3">
+<div class="feature"><img src="./public/assets/images/horoscope.jpg" alt="Horoscope"><h5>Daily Horoscope</h5><p>Accurate & personalized predictions updated every day.</p></div>
+<div class="feature"><img src="./public/assets/images/kundali.jpg" alt="Kundli"><h5>Kundli Generator</h5><p>Generate detailed birth charts with planetary insights.</p></div>
+<div class="feature"><img src="./public/assets/images/matchmaking.jpg" alt="Love"><h5>Matchmaking</h5><p>Check compatibility & love predictions instantly.</p></div>
+</div>
 
-    <!-- Zodiac Strip -->
-    <h2 class="section-title">Zodiac Signs ♈</h2>
-    <div class="zodiac-strip">
-      <?php
-$zodiacs = [
-  "aries"=>"Aries","taurus"=>"Taurus","gemini"=>"Gemini","cancer"=>"Cancer",
-  "leo"=>"Leo","virgo"=>"Virgo","libra"=>"Libra","scorpio"=>"Scorpio",
-  "sagittarius"=>"Sagittarius","capricorn"=>"Capricorn","aquarius"=>"Aquarius","pisces"=>"Pisces"
-];
-foreach($zodiacs as $file => $name){
-  echo "<div class='zodiac-item'>
-          <img src='./public/assets/images/zodiac-icons/$file.jpg' alt='$name'>
-          <div><strong>$name</strong></div>
-        </div>";
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+<h2 class="section-title">What People Say ✨</h2>
+<div class="d-flex flex-wrap justify-content-center">
+<div class="testimonial-card col-md-3"><p>"AstroGuide gave me clarity about my career choices. Spot on!"</p><strong>– Priya, Mumbai</strong></div>
+<div class="testimonial-card col-md-3"><p>"The Kundli generator is beautiful & accurate. Love the design!"</p><strong>– Rahul, Delhi</strong></div>
+<div class="testimonial-card col-md-3"><p>"The love compatibility feature was fun and surprisingly true 😍."</p><strong>– Ayesha, Dubai</strong></div>
+</div>
+</section>
+
+<!-- BLOG -->
+<h2 class="section-title">Astrology Insights 📝</h2>
+<div class="blog-grid">
+<div class="blog-card"><img src="./public/assets/images/moonsign.jpg" alt="Moon Sign"><div class="blog-card-body"><h6>5 Things to Know About Your Moon Sign</h6><p>Understanding your emotions & inner self through moon placement.</p></div></div>
+<div class="blog-card"><img src="./public/assets/images/Astrology.jpg" alt="Astro Tips"><div class="blog-card-body"><h6>Astrology & Career Choices</h6><p>Which zodiac signs thrive in leadership, creativity, or service roles?</p></div></div>
+<div class="blog-card"><img src="./public/assets/images/Love.jpg" alt="Love"><div class="blog-card-body"><h6>Love & Compatibility in 2025</h6><p>Check which signs are most aligned for long-term relationships this year.</p></div></div>
+</div>
+
+<!-- ZODIAC STRIP -->
+<h2 class="section-title">Zodiac Signs ♈</h2>
+<div class="zodiac-strip">
+<?php
+$zodiacs = ["aries"=>"Aries","taurus"=>"Taurus","gemini"=>"Gemini","cancer"=>"Cancer","leo"=>"Leo","virgo"=>"Virgo","libra"=>"Libra","scorpio"=>"Scorpio","sagittarius"=>"Sagittarius","capricorn"=>"Capricorn","aquarius"=>"Aquarius","pisces"=>"Pisces"];
+foreach($zodiacs as $file=>$name){
+    echo "<div class='zodiac-item'><img src='./public/assets/images/zodiac-icons/$file.jpg' alt='$name'><div><strong style='color:#ffd700;'>$name</strong></div></div>";
 }
 ?>
-    </div>
+</div>
 
-    <section class="extra-content mt-5 mb-5">
-      <h2 class="section-title">Astrology Tips & Guides 🌟</h2>
-      <div class="grid-3">
-        <div class="feature">
-          <img src="./public/assets/images/daily-retuals.jpg" alt="Tip 1">
-          <h5>Daily Rituals</h5>
-          <p>Small daily practices that align your energy with the cosmos.</p>
-        </div>
-        <div class="feature">
-          <img src="./public/assets/images/moon-phase.jpg" alt="Tip 2">
-          <h5>Moon Phases</h5>
-          <p>Learn how to use lunar cycles to plan and manifest effectively.</p>
-        </div>
-        <div class="feature">
-          <img src="./public/assets/images/plantry-insight.jpg" alt="Tip 3">
-          <h5>Planetary Insights</h5>
-          <p>Understand how each planet affects your daily life and decisions.</p>
-        </div>
-      </div>
-    </section>
+<!-- SUBSCRIBE -->
+<section class="subscribe-section">
+<h2>Subscribe to AstroGuide Newsletter ✨</h2>
+<p>Get weekly horoscope updates, astrology tips & cosmic insights directly to your inbox.</p>
+<form class="subscribe-form" action="#" method="POST">
+<input type="email" name="email" placeholder="Enter your email" required>
+<button type="submit">Subscribe</button>
+</form>
+</section>
 
-    <!-- Subscribe / Newsletter Section -->
-    <section class="subscribe-section mt-5 mb-5">
-      <div class="container text-center">
-        <h2 class="section-title">Subscribe to AstroGuide Newsletter ✨</h2>
-        <p>Get weekly horoscope updates, astrology tips & cosmic insights directly to your inbox.</p>
-        <form class="subscribe-form d-flex justify-content-center flex-wrap mt-3" action="#" method="POST">
-          <input type="email" name="email" placeholder="Enter your email" required>
-          <button type="submit" class="btn-cta btn-primary">Subscribe</button>
-        </form>
-      </div>
-    </section>
+</main>
 
-  </main>
-  <footer>
-    <div class="container">
-      <div style="margin-bottom:10px">&copy;
-        <?=date("Y")?> AstroGuide
-      </div>
-      <div><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="contact.php">Contact</a></div>
-    </div>
-  </footer>
-
-  <script>
-    // Respect reduced-motion preference
-    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const video = document.getElementById('bg-video');
-    if (prefersReduce && video) {
-      video.pause();
-      video.style.display = 'none';
-      document.querySelector('.hero-overlay').style.background = 'rgba(10,12,20,0.45)';
-    }
-
-    // On small screens, optionally hide video to save bandwidth
-    function handleResize() {
-      if (window.innerWidth < 600) {
-        if (video) video.style.display = 'none';
-      } else {
-        if (video && !prefersReduce) video.style.display = '';
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-  </script>
-  <script src="../assets/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<!-- FOOTER -->
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
