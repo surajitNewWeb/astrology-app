@@ -220,8 +220,6 @@ $astrologyPages = ['horoscope.php','birthchart.php','kundli.php','matchmaking.ph
                 href="<?=$base?>/public/kundli.php"><i class="bi bi-moon"></i> Kundli</a></li>
             <li><a class="dropdown-item <?=($current_page=='matchmaking.php'?'active':'')?>"
                 href="<?=$base?>/public/matchmaking.php"><i class="bi bi-heart-fill"></i> Matchmaking</a></li>
-            <li><a class="dropdown-item <?=($current_page=='numerology.php'?'active':'')?>"
-                href="<?=$base?>/public/numerology.php"><i class="bi bi-123"></i> Numerology</a></li>
             <li><a class="dropdown-item <?=($current_page=='panchang.php'?'active':'')?>"
                 href="<?=$base?>/public/panchang.php"><i class="bi bi-calendar-event"></i> Panchang</a></li>
             <li><a class="dropdown-item <?=($current_page=='dosha.php'?'active':'')?>"

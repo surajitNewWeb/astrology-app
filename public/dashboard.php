@@ -231,10 +231,10 @@ $dosha   = count(array_filter($reports, fn($r) => $r['type'] === 'dosha'));
       Matchmaking
       <small>Check love & compatibility</small>
     </div>
-    <div class="quick-link" onclick="location.href='numerology.php'">
-      <span class="icon">🔢</span>
-      Numerology
-      <small>Life path & lucky numbers</small>
+    <div class="quick-link" onclick="location.href='birthchart.php'">
+      <span class="icon">☀️</span>
+      Birth Chart
+      <small> Show Birth-chart</small>
     </div>
     <div class="quick-link" onclick="location.href='panchang.php'">
       <span class="icon">📅</span>
@@ -254,10 +254,9 @@ $dosha   = count(array_filter($reports, fn($r) => $r['type'] === 'dosha'));
     <div class="col-md-3"><div class="summary-card"><h3><?php echo $horoscopes; ?></h3>Horoscopes</div></div>
     <div class="col-md-3"><div class="summary-card"><h3><?php echo $kundlis; ?></h3>Kundli</div></div>
     <div class="col-md-3"><div class="summary-card"><h3><?php echo $matchmaking; ?></h3>Matchmaking</div></div>
-    <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $numerology; ?></h3>Numerology</div></div>
-      <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $birthchart; ?></h3>Birthcharts</div></div>
-        <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $panchang; ?></h3>Panchnag</div></div>
-          <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $dosha; ?></h3>Dosha</div></div>
+    <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $birthchart; ?></h3>Birthcharts</div></div>
+    <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $panchang; ?></h3>Panchnag</div></div>
+    <div class="col-md-3 mt-3"><div class="summary-card"><h3><?php echo $dosha; ?></h3>Dosha</div></div>
   </div>
 
   <!-- Recent Activity -->

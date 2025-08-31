@@ -2,6 +2,7 @@
 // backend/astrology/dosha.php
 require_once __DIR__ . '/../helpers.php';
 require_once __DIR__ . '/../database.php';
+require_once __DIR__ . '/../auth/auth_check.php';
 
 function analyzeDosha($userId, $doshaType, array $birth) {
     $supported = ['mangal-dosha'];  
