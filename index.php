@@ -4,209 +4,1050 @@ require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <style>
-/* --- BASE --- */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    background: #0a0e1a;
-    color: #f8fafc;
+    /* --- BASE --- */
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        background: #090f23ff;
+        /* deeper cosmic navy */
+        color: #e5e7eb;
+        /* softer off-white */
+  background: #090f23ff url("https://www.transparenttextures.com/patterns/stardust.png");
+  animation: moveStars 60s linear infinite;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+       main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    /* --- HERO SECTION --- */
+    .hero {
+        position: relative;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+        overflow: hidden;
+    }
+
+    #bg-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.45) contrast(1.1) saturate(1.2);
+        z-index: 0;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 70%),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.5));
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .hero-panel {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 28px;
+        padding: 40px;
+        display: flex;
+        gap: 36px;
+        align-items: center;
+        border: 1px solid rgba(250, 204, 21, 0.35);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(18px) saturate(180%);
+        animation: fadeUp 1s ease both;
+    }
+
+    .hero-left {
+        flex: 1;
+    }
+
+    .hero-right {
+        flex: 0 0 340px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- TYPOGRAPHY --- */
+    .gradient-text {
+        font-size: clamp(30px, 3.8vw, 46px);
+        font-weight: 800;
+        line-height: 1.15;
+        background: linear-gradient(135deg, #fde047, #facc15, #f59e0b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero p.lead {
+        color: #e5e7eb;
+        font-size: 1.1rem;
+        margin: 16px 0 20px;
+        max-width: 550px;
+        line-height: 1.6;
+    }
+
+    .small-text {
+        margin-top: 10px;
+        font-size: 0.95rem;
+        color: #d1d5db;
+    }
+
+    /* --- BUTTONS --- */
+    .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 18px;
+    }
+
+    .btn-cta {
+        padding: 12px 28px;
+        border-radius: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #facc15;
+        border: 2px solid #eab308;
+        color: #111;
+    }
+
+    .btn-outline {
+        background: transparent;
+        border: 2px solid #fbbf24;
+        color: #fbbf24;
+    }
+
+    .btn-solid {
+        background: #1f2937;
+        border: 2px solid #facc15;
+        color: #facc15;
+    }
+
+    .btn-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(250, 204, 21, 0.45);
+    }
+
+    .panel-card {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
+        padding: 25px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(250, 204, 21, 0.3);
+        transition: transform 0.4s ease;
+    }
+
+    .panel-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(250, 204, 21, 0.4);
+    }
+
+    .quick-features {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        color: #facc15;
+        margin-top: 16px;
+    }
+
+    /* --- MAIN --- */
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 40px;
+        color: #facc15;
+    }
+
+    .grid-3 {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .feature {
+        background: #111827;
+        border-radius: 16px;
+        padding: 28px;
+        text-align: center;
+        border: 1px solid rgba(250, 204, 21, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(250, 204, 21, 0.4);
+        border-color: #facc15;
+    }
+
+    .feature img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+
+    .feature h5 {
+        color: #facc15;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .feature p {
+        color: #cbd5e1;
+        font-size: 0.95rem;
+    }
+
+    /* --- ASTRO SECTION --- */
+    .astro-section {
+        position: relative;
+        padding: 80px 20px;
+        overflow: hidden;
+    }
+
+    .astro-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* --- STAR ANIMATION BG --- */
+    .stars {
+  position: absolute;
+  inset: 0;
+  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png");
+  animation: moveStars 60s linear infinite;
+  opacity: 0.5;
+  z-index: 1;
 }
-a { text-decoration: none; }
-
-/* --- HERO --- */
-.hero {
-    position: relative;
-    min-height: 70vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    @keyframes moveStars {
+  from { background-position: 0 0; }
+  to { background-position: 10000px 5000px; }
 }
-#bg-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.35) contrast(1.1) saturate(1.2);
-    z-index: 0;
-}
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.05), transparent 70%);
-    z-index: 1;
-    pointer-events: none;
-}
-.hero-panel {
-    position: relative;
-    z-index: 2;
-    max-width: 1080px;
-    width: calc(100% - 48px);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 25px;
-    padding: 36px;
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,215,0,0.3);
-    backdrop-filter: blur(16px) saturate(180%);
-}
-.hero-left { flex: 1; }
-.hero-right { width: 320px; display: flex; align-items: center; justify-content: center; }
-.gradient-text {
-    font-size: clamp(28px, 3.5vw, 44px);
-    font-weight: 800;
-    line-height: 1.1;
-    background: linear-gradient(135deg,#ffd700,#ffec8b);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-.hero p.lead { color: #cbd5e1; font-size: 1.05rem; margin: 12px 0 18px; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
-.btn-cta { padding: 12px 28px; border-radius: 12px; font-weight: 700; border: none; cursor: pointer; transition: 0.3s; }
-.btn-primary { background: #ffd70000; color: #ffffff; border: 2px solid #ffcb00; }
-.btn-outline { background: transparent; border: 2px solid #ffd700; color: #ffd700; }
-.btn-solid { background: #1a1f2e; border: 2px solid #ffd700; color: #ffd700; }
-.btn-cta:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,215,0,0.4); }
-.panel-card { background: rgba(255,255,255,0.08); border-radius:20px; padding:25px; backdrop-filter:blur(10px); border:1px solid rgba(255,215,0,0.3); transition:transform 0.4s ease;}
-.panel-card:hover { transform:translateY(-5px); box-shadow:0 15px 40px rgba(255,215,0,0.4);}
-.quick-features { display:flex; gap:18px; flex-wrap:wrap; color:#ffd700; margin-top:16px; }
 
-/* --- MAIN --- */
-main { max-width:1200px; margin:0 auto; padding:60px 20px; }
-.section-title { text-align:center; font-size:2rem; font-weight:700; margin-bottom:40px; color:white; }
-.grid-3 { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
-.feature { background:#111827; border-radius:16px; padding:28px; text-align:center; border:1px solid rgba(255,255,255,0.05); transition:all 0.3s ease;}
-.feature:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(255,215,0,0.4); border-color:#ffd700;}
-.feature img { width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:12px;}
-.feature h5 { color:#ffd700; font-weight:700; margin-bottom:8px;}
-.feature p { color:#cbd5e1; font-size:0.95rem; }
+    /* --- ROW --- */
+    .astro-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+        margin-bottom: 100px;
+    }
 
-/* --- TESTIMONIALS --- */
-.testimonials { padding:60px 20px; text-align:center; background:#101829; color:white; border-radius:20px; margin:60px 0; border:1px solid rgba(255,215,0,0.2);}
-.testimonial-card { background:#111827; border:1px solid rgba(255,215,0,0.2); border-radius:16px; padding:24px; margin:10px; backdrop-filter:blur(10px); transition: transform 0.3s ease;}
-.testimonial-card:hover { transform:translateY(-5px);}
-.testimonial-card p { font-style:italic; color:rgba(255,255,255,0.95);}
-.testimonial-card strong { display:block; margin-top:8px; color:#ffd700; }
+    .astro-row .reverse {
+        flex-direction: row-reverse;
+    }
 
-/* --- BLOG --- */
-.blog-grid { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); }
-.blog-card { background:#111827; border-radius:16px; overflow:hidden; transition:all 0.3s ease; border:1px solid rgba(255,255,255,0.05);}
-.blog-card:hover { transform:translateY(-8px); border-color:#ffd700; box-shadow:0 15px 40px rgba(255,215,0,0.3);}
-.blog-card img { width:100%; height:180px; object-fit:cover; }
-.blog-card-body { padding:20px; }
-.blog-card-body h6 { color:#ffd700; font-weight:700; margin-bottom:8px; }
-.blog-card-body p { font-size:0.95rem; color:#cbd5e1; }
+    /* --- LEFT --- */
+    .astro-left h2 {
+        font-size: clamp(28px, 3vw, 40px);
+        font-weight: 700;
+        color: #facc15;
+        margin-bottom: 20px;
+        line-height: 1.3;
+    }
 
-/* --- ZODIAC --- */
-.zodiac-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:20px; }
-.zodiac-item { background:#111827; padding:16px; border-radius:16px; text-align:center; transition: all 0.3s ease; border:1px solid rgba(255,255,255,0.05);}
-.zodiac-item:hover { transform:scale(1.05); box-shadow:0 15px 40px rgba(255,215,0,0.4); border-color:#ffd700;}
-.zodiac-item img { width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:8px; }
+    .astro-left p {
+        font-size: 1rem;
+        color: #d1d5db;
+        line-height: 1.7;
+        margin-bottom: 28px;
+    }
 
-/* --- SUBSCRIBE --- */
-.subscribe-section { background:#111827; padding:60px 20px; border-radius:20px; color:white; margin:60px 0; text-align:center; border:1px solid rgba(255,215,0,0.2);}
-.subscribe-section h2 { margin-bottom:12px; color:#ffd700;}
-.subscribe-section p { margin-bottom:24px; color:rgba(255,255,255,0.9);}
-.subscribe-form { display:flex; justify-content:center; flex-wrap:wrap; gap:12px;}
-.subscribe-form input { padding:14px 18px; border-radius:12px; border:1px solid rgba(255,215,0,0.3); background:#0a0e1a; color:white; flex:1; min-width:250px; max-width:350px;}
-.subscribe-form button { padding:14px 28px; border-radius:12px; border:none; font-weight:700; cursor:pointer; background:#ffd70000; color:#ffffff; border:2px solid #ffcb00;}
-.subscribe-form button:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(255,223,0,0.4); }
+    /* --- ZODIAC CHART --- */
+    .zodiac-circle {
+        width: 340px;
+        height: 340px;
+        border-radius: 50%;
+        padding: 20px;
+        background: radial-gradient(circle at center, rgba(250, 204, 21, 0.15), transparent 70%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: rotateZodiac 40s linear infinite;
+        box-shadow: 0 0 30px rgba(250, 204, 21, 0.25);
+    }
 
-/* --- FOOTER --- */
-footer { padding:32px 20px; text-align:center; color:#94a3b8; font-size:0.95rem; background:#0a0e1a; border-top:1px solid rgba(255,255,255,0.05);}
-footer a { color:#ffd700; transition:0.3s; }
-footer a:hover { color:white; }
+    .zodiac-circle img {
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 0 15px rgba(250, 204, 21, 0.5));
+    }
 
-/* --- RESPONSIVE --- */
-@media(max-width:992px){.hero-panel{flex-direction:column;gap:20px;}.hero-right{width:100%;}}
-@media(max-width:560px){.hero{min-height:56vh;padding:48px 0;}.hero-left{text-align:center;}.quick-features{justify-content:center;}}
-@media(max-width:768px){.zodiac-strip{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:480px){.zodiac-strip{grid-template-columns:1fr;}}
+    @keyframes rotateZodiac {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* --- ABOUT SECTION --- */
+    .astro-about .small-label {
+        display: block;
+        font-size: 0.9rem;
+        color: #f59e0b;
+    }
+
+    .astro-about h3 {
+        font-size: clamp(26px, 2.8vw, 36px);
+        font-weight: 700;
+        color: #facc15;
+        margin-bottom: 18px;
+    }
+
+    .astro-about p {
+        font-size: 1rem;
+        color: #e5e7eb;
+        line-height: 1.7;
+        margin-bottom: 14px;
+    }
+
+    /* --- IMAGE --- */
+    .astro-image img {
+        max-width: 480px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    /* --- BUTTON --- */
+    .btn-orange {
+        padding: 12px 28px;
+        background: linear-gradient(135deg, #facc15, #eab308);
+        border: none;
+        border-radius: 10px;
+        color: #111;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.35s ease;
+        box-shadow: 0 6px 16px rgba(250, 204, 21, 0.35);
+    }
+
+    .btn-orange:hover {
+        background: linear-gradient(135deg, #fde047, #facc15);
+        box-shadow: 0 10px 25px rgba(250, 204, 21, 0.55);
+        transform: translateY(-3px);
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 992px) {
+
+        .astro-row,
+        .astro-row.reverse {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .astro-right,
+        .astro-image {
+            margin: 20px auto;
+        }
+
+        .zodiac-circle {
+            width: 260px;
+            height: 260px;
+        }
+    }
+
+    /* --- TESTIMONIALS --- */
+    .testimonials {
+        padding: 20px 20px;
+        text-align: center;
+        color: white;
+        border-radius: 20px;
+        margin: 40px 0;
+    }
+
+    .testimonial-card {
+        background: #111827;
+        border: 1px solid rgba(250, 204, 21, 0.15);
+        border-radius: 16px;
+        padding: 24px;
+        margin: 10px;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .testimonial-card p {
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .testimonial-card strong {
+        display: block;
+        margin-top: 8px;
+        color: #facc15;
+    }
+
+    .testimonial-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 12px;
+        border: 2px solid #facc15;
+        box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+    }
+
+
+    /* --- BLOG --- */
+    .blog-grid {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .blog-card {
+        background: #111827;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(250, 204, 21, 0.1);
+    }
+
+    .blog-card:hover {
+        transform: translateY(-8px);
+        border-color: #facc15;
+        box-shadow: 0 15px 40px rgba(250, 204, 21, 0.3);
+    }
+
+    .blog-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .blog-card-body {
+        padding: 20px;
+    }
+
+    .blog-card-body h6 {
+        color: #facc15;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .blog-card-body p {
+        font-size: 0.95rem;
+        color: #cbd5e1;
+    }
+
+    /* --- VEDIC WISDOM --- */
+    .vedic-wisdom {
+        border-radius: 40px;
+        padding: 4rem;
+        margin: 4rem 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .vedic-wisdom::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 10 L60 40 L90 40 L70 60 L80 90 L50 70 L20 90 L30 60 L10 40 L40 40 Z" fill="rgba(250,204,21,0.05)"/></svg>') repeat;
+        background-size: 80px 80px;
+        opacity: 0.05;
+    }
+
+    .wisdom-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2.5rem;
+        margin-top: 3rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .wisdom-card {
+        background: rgba(17, 24, 39, 0.9);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(250, 204, 21, 0.08);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(250, 204, 21, 0.2);
+        color: #f3f4f6;
+    }
+
+    .wisdom-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 45px rgba(250, 204, 21, 0.15);
+        border-color: #facc15;
+    }
+
+    .wisdom-card h4 {
+        color: #facc15;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    /* --- ZODIAC --- */
+    .zodiac-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .zodiac-item {
+        background: #111827;
+        padding: 16px;
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(250, 204, 21, 0.15);
+    }
+
+    .zodiac-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(250, 204, 21, 0.4);
+        border-color: #facc15;
+    }
+
+    .zodiac-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 8px;
+    }
+
+    /* --- SERVICES SECTION --- */
+    .services-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 80px 20px;
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        flex-wrap: wrap;
+    }
+
+    .services-header .small-label {
+        font-size: 0.9rem;
+        color: #f59e0b;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .services-header h2 {
+        flex: 1;
+        font-size: clamp(26px, 3vw, 40px);
+        font-weight: 600;
+        font-family: 'Playfair Display', serif;
+        color: #facc15;
+    }
+
+    .services-header h2 em {
+        font-style: italic;
+        color: #fde047;
+    }
+
+    /* Button */
+    .btn-outline-green {
+        padding: 10px 20px;
+        border: 1px solid #facc15;
+        border-radius: 6px;
+        background: transparent;
+        color: #facc15;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-green:hover {
+        background: #facc15;
+        color: #0c0c14;
+        box-shadow: 0 0 15px rgba(250, 204, 21, 0.4);
+    }
+
+    /* Service Cards */
+    .services-list {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 80px;
+    }
+
+    .service-card {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .service-card.reverse {
+        flex-direction: row-reverse;
+    }
+
+    .service-text {
+        flex: 1;
+    }
+
+    .service-text .service-num {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #f59e0b;
+        margin-bottom: 10px;
+    }
+
+    .service-text h3 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #facc15;
+    }
+
+    .service-text p {
+        color: #d1d5db;
+        line-height: 1.7;
+    }
+
+    .service-img {
+        flex: 1;
+    }
+
+    .service-img img {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        object-fit: cover;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+
+        .service-card,
+        .service-card.reverse {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .services-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .btn-outline-green {
+            margin-top: 15px;
+        }
+    }
+
+    /* --- SUBSCRIBE --- */
+    .subscribe-section {
+        background: #111827;
+        padding: 60px 20px;
+        border-radius: 20px;
+        color: white;
+        margin: 60px 0;
+        text-align: center;
+        border: 1px solid rgba(250, 204, 21, 0.2);
+    }
+
+    .subscribe-section h2 {
+        margin-bottom: 12px;
+        color: #facc15;
+    }
+
+    .subscribe-section p {
+        margin-bottom: 24px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .subscribe-form {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .subscribe-form input {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 1px solid rgba(250, 204, 21, 0.3);
+        background: #0a0e1a;
+        color: white;
+        flex: 1;
+        min-width: 250px;
+        max-width: 350px;
+    }
+
+    .subscribe-form button {
+        padding: 14px 28px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 700;
+        cursor: pointer;
+        background: transparent;
+        color: #facc15;
+        border: 2px solid #facc15;
+    }
+
+    .subscribe-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(250, 204, 21, 0.4);
+    }
+
+
+    /* --- RESPONSIVE --- */
+    @media(max-width:992px) {
+        .hero-panel {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .hero-right {
+            width: 100%;
+        }
+    }
+
+    @media(max-width:560px) {
+        .hero {
+            min-height: 56vh;
+            padding: 48px 0;
+        }
+
+        .hero-left {
+            text-align: center;
+        }
+
+        .quick-features {
+            justify-content: center;
+        }
+    }
+
+    @media(max-width:768px) {
+        .zodiac-strip {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(max-width:480px) {
+        .zodiac-strip {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 
 <!-- HERO -->
 <section class="hero">
-<video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg">
-    <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
-</video>
-<div class="hero-overlay"></div>
-<div class="hero-panel container">
-<div class="hero-left">
-    <h1 class="gradient-text">Discover Your Cosmic Path — Daily Guidance & Natal Charts</h1>
-    <p class="lead">Fast personalized horoscopes, accurate birth charts, and compatibility reports — made simple & beautiful.</p>
-    <div class="cta-row">
-        <button class="btn-cta btn-primary" onclick="location.href='horoscope.php'">Get My Horoscope</button>
-        <button class="btn-cta btn-outline" onclick="location.href='kundli.php'">Generate Kundli</button>
-        <button class="btn-cta btn-solid" onclick="location.href='matchmaking.php'">Matchmaking</button>
+    <video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg">
+        <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-panel container">
+        <!-- Left -->
+        <div class="hero-left">
+            <h1 class="gradient-text">Discover Your Cosmic Path — Daily Guidance & Natal Charts</h1>
+            <p class="lead">
+                Fast personalized horoscopes, accurate birth charts, and compatibility reports — made simple &amp;
+                beautiful.
+            </p>
+
+            <div class="cta-row">
+                <button class="btn-cta btn-primary" onclick="location.href='horoscope.php'">Get My Horoscope</button>
+                <button class="btn-cta btn-outline" onclick="location.href='kundli.php'">Generate Kundli</button>
+                <button class="btn-cta btn-solid" onclick="location.href='matchmaking.php'">Matchmaking</button>
+            </div>
+
+            <div class="quick-features">
+                <span>✨ Daily updates</span>
+                <span>📜 Accurate charts</span>
+                <span>💞 Compatibility</span>
+            </div>
+        </div>
+
+        <!-- Right -->
+        <div class="hero-right">
+            <div class="panel-card">
+                <h4>Today's Highlights</h4>
+                <p><strong>Lucky Color:</strong> Teal · <strong>Lucky Number:</strong> 7</p>
+                <p class="small-text">
+                    Quick insight: Favor conversations and new ideas — the moon supports clarity.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="quick-features">
-        <div>✨ Daily updates</div>
-        <div>📜 Accurate charts</div>
-        <div>💞 Compatibility</div>
-    </div>
-</div>
-<div class="hero-right">
-    <div class="panel-card">
-        <h4 style="color:#ffd700;">Today's Highlights</h4>
-        <p><strong>Lucky Color:</strong> Teal · <strong>Lucky Number:</strong> 7</p>
-        <p style="margin-top:10px; font-size:0.95rem;">Quick insight: Favor conversations and new ideas — the moon supports clarity.</p>
-    </div>
-</div>
-</div>
 </section>
+
 
 <!-- FEATURES -->
 <main id="main">
-<h2 class="section-title">Our Features 🔮</h2>
-<div class="grid-3">
-<div class="feature"><img src="./public/assets/images/horoscope.jpg" alt="Horoscope"><h5>Daily Horoscope</h5><p>Accurate & personalized predictions updated every day.</p></div>
-<div class="feature"><img src="./public/assets/images/kundali.jpg" alt="Kundli"><h5>Kundli Generator</h5><p>Generate detailed birth charts with planetary insights.</p></div>
-<div class="feature"><img src="./public/assets/images/matchmaking.jpg" alt="Love"><h5>Matchmaking</h5><p>Check compatibility & love predictions instantly.</p></div>
-</div>
+    <h2 class="section-title">Our Features 🔮</h2>
+    <div class="grid-3">
+        <div class="feature"><img src="./public/assets/images/horoscope.jpg" alt="Horoscope">
+            <h5>Daily Horoscope</h5>
+            <p>Accurate & personalized predictions updated every day.</p>
+        </div>
+        <div class="feature"><img src="./public/assets/images/kundali.jpg" alt="Kundli">
+            <h5>Kundli Generator</h5>
+            <p>Generate detailed birth charts with planetary insights.</p>
+        </div>
+        <div class="feature"><img src="./public/assets/images/matchmaking.jpg" alt="Love">
+            <h5>Matchmaking</h5>
+            <p>Check compatibility & love predictions instantly.</p>
+        </div>
+    </div>
+    <!-- ASTRO SECTION -->
+    <section class="astro-section">
+        <div class="astro-container">
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-<h2 class="section-title">What People Say ✨</h2>
-<div class="d-flex flex-wrap justify-content-center">
-<div class="testimonial-card col-md-3"><p>"AstroGuide gave me clarity about my career choices. Spot on!"</p><strong>– Priya, Mumbai</strong></div>
-<div class="testimonial-card col-md-3"><p>"The Kundli generator is beautiful & accurate. Love the design!"</p><strong>– Rahul, Delhi</strong></div>
-<div class="testimonial-card col-md-3"><p>"The love compatibility feature was fun and surprisingly true 😍."</p><strong>– Ayesha, Dubai</strong></div>
-</div>
-</section>
+            <!-- Top Row -->
+            <div class="astro-row">
+                <!-- Left -->
+                <div class="astro-left">
+                    <h2>Your Path Is Illuminated By<br> Road-Map Of Stars…..</h2>
+                    <p>
+                        The stars in the night sky act as a celestial GPS, providing navigational guidance
+                        for sailors and travelers. The stars are arranged in patterns and constellations
+                        that can be used to identify location, direction, and time.
+                    </p>
+                    <button class="btn-orange">Book A Appointment</button>
+                </div>
 
-<!-- BLOG -->
-<h2 class="section-title">Astrology Insights 📝</h2>
-<div class="blog-grid">
-<div class="blog-card"><img src="./public/assets/images/moonsign.jpg" alt="Moon Sign"><div class="blog-card-body"><h6>5 Things to Know About Your Moon Sign</h6><p>Understanding your emotions & inner self through moon placement.</p></div></div>
-<div class="blog-card"><img src="./public/assets/images/Astrology.jpg" alt="Astro Tips"><div class="blog-card-body"><h6>Astrology & Career Choices</h6><p>Which zodiac signs thrive in leadership, creativity, or service roles?</p></div></div>
-<div class="blog-card"><img src="./public/assets/images/Love.jpg" alt="Love"><div class="blog-card-body"><h6>Love & Compatibility in 2025</h6><p>Check which signs are most aligned for long-term relationships this year.</p></div></div>
-</div>
+                <!-- Right (Zodiac Chart) -->
+                <div class="astro-right">
+                    <div class="zodiac-circle">
+                        <img src="./public/assets/images/Vector.png" alt="Zodiac Chart">
+                    </div>
+                </div>
+            </div>
 
-<!-- ZODIAC STRIP -->
-<h2 class="section-title">Zodiac Signs ♈</h2>
-<div class="zodiac-strip">
-<?php
-$zodiacs = ["aries"=>"Aries","taurus"=>"Taurus","gemini"=>"Gemini","cancer"=>"Cancer","leo"=>"Leo","virgo"=>"Virgo","libra"=>"Libra","scorpio"=>"Scorpio","sagittarius"=>"Sagittarius","capricorn"=>"Capricorn","aquarius"=>"Aquarius","pisces"=>"Pisces"];
-foreach($zodiacs as $file=>$name){
-    echo "<div class='zodiac-item'><img src='./public/assets/images/zodiac-icons/$file.jpg' alt='$name'><div><strong style='color:#ffd700;'>$name</strong></div></div>";
-}
-?>
-</div>
+            <!-- Bottom Row -->
+            <div class="astro-row reverse">
+                <!-- Left (Image) -->
+                <div class="astro-image">
+                    <img src="./public/assets/images/astro-woman.png" alt="Astrology Image">
+                </div>
 
-<!-- SUBSCRIBE -->
-<section class="subscribe-section">
-<h2>Subscribe to AstroGuide Newsletter ✨</h2>
-<p>Get weekly horoscope updates, astrology tips & cosmic insights directly to your inbox.</p>
-<form class="subscribe-form" action="#" method="POST">
-<input type="email" name="email" placeholder="Enter your email" required>
-<button type="submit">Subscribe</button>
-</form>
-</section>
+                <!-- Right (Text) -->
+                <div class="astro-about">
+                    <span class="small-label">— We Are Welcome —</span>
+                    <h3>About The Omkara Rudraksha….</h3>
+                    <p>
+                        We have the world famous astrologers on the best astrology website in India,
+                        practicing both Indian astrology and Western astrology for astrology today.
+                    </p>
+                    <p>
+                        They will provide the best free horoscope astrology to you by analyzing your
+                        birth chart and your astrology sign. We have the world famous astrologers on
+                        the best astrology website in India, practicing both Indian & Western astrology.
+                    </p>
+                    <button class="btn-orange">Read More</button>
+                </div>
+            </div>
 
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <h2 class="section-title">What People Say ✨</h2>
+        <div class="d-flex flex-wrap justify-content-center">
+
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/priya.jpg" alt="Priya" class="testimonial-img">
+                <p>"AstroGuide gave me clarity about my career choices. Spot on!"</p>
+                <strong>– Priya, Mumbai</strong>
+            </div>
+
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/rahul.jpg" alt="Rahul" class="testimonial-img">
+                <p>"The Kundli generator is beautiful & accurate. Love the design!"</p>
+                <strong>– Rahul, Delhi</strong>
+            </div>
+
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/ayesha.jpg" alt="Ayesha" class="testimonial-img">
+                <p>"The love compatibility feature was fun and surprisingly true 😍."</p>
+                <strong>– Ayesha, Dubai</strong>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- BLOG -->
+    <h2 class="section-title">Astrology Insights 📝</h2>
+    <div class="blog-grid">
+        <div class="blog-card"><img src="./public/assets/images/moonsign.jpg" alt="Moon Sign">
+            <div class="blog-card-body">
+                <h6>5 Things to Know About Your Moon Sign</h6>
+                <p>Understanding your emotions & inner self through moon placement.</p>
+            </div>
+        </div>
+        <div class="blog-card"><img src="./public/assets/images/Astrology.jpg" alt="Astro Tips">
+            <div class="blog-card-body">
+                <h6>Astrology & Career Choices</h6>
+                <p>Which zodiac signs thrive in leadership, creativity, or service roles?</p>
+            </div>
+        </div>
+        <div class="blog-card"><img src="./public/assets/images/Love.jpg" alt="Love">
+            <div class="blog-card-body">
+                <h6>Love & Compatibility in 2025</h6>
+                <p>Check which signs are most aligned for long-term relationships this year.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <section class="services">
+        <div class="services-header">
+            <h2>Discover <em>Your Path</em> in the Stars with Us</h2>
+            <button class="btn-outline-green">See All Services</button>
+        </div>
+
+        <div class="services-list">
+
+            <!-- Service 1 -->
+            <div class="service-card">
+                <div class="service-text">
+                    <span class="service-num">01</span>
+                    <h3>Natal Chart Readings</h3>
+                    <p>
+                        We generate your natal chart and interpret the positions of the planets, signs,
+                        and houses to give you insights into your personality, strengths, weaknesses,
+                        and life path.
+                    </p>
+                </div>
+                <div class="service-img">
+                    <img src="./public/assets/images/service1.png" alt="Natal Chart Reading">
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-card reverse">
+                <div class="service-text">
+                    <span class="service-num">02</span>
+                    <h3>Compatibility Readings</h3>
+                    <p>
+                        We can analyze the compatibility between two individuals by comparing their natal
+                        charts. This can help people understand their relationships with partners, friends,
+                        or family members better.
+                    </p>
+                </div>
+                <div class="service-img">
+                    <img src="./public/assets/images/service2.png" alt="Compatibility Readings">
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-card">
+                <div class="service-text">
+                    <span class="service-num">03</span>
+                    <h3>Progression Readings</h3>
+                    <p>
+                        We provide insights into upcoming planetary transits and progressions that may
+                        influence your life events and experiences. It can be useful for timing significant
+                        decisions or life changes.
+                    </p>
+                </div>
+                <div class="service-img">
+                    <img src="./public/assets/images/service3.png" alt="Progression Readings">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VEDIC WISDOM -->
+    <section class="vedic-wisdom" id="wisdom">
+        <h2 class="section-title fade-in">🌸 Ancient Vedic Wisdom 🌸</h2>
+        <p class="fade-in" style="text-align: center; font-size: 1.2rem; color: #e5e7eb; margin-bottom: 2rem;">
+            Embrace the timeless knowledge of our ancestors and discover the divine science of life through sacred
+            teachings
+        </p>
+
+        <div class="wisdom-grid">
+            <div class="wisdom-card fade-in">
+                <h4>🌸 Karma & Dharma</h4>
+                <p>Understand your life's purpose through the sacred laws of karma and dharma, guiding you towards
+                    righteous living and spiritual evolution.</p>
+            </div>
+
+            <div class="wisdom-card fade-in">
+                <h4>🧘‍♀️ Meditation & Mantras</h4>
+                <p>Discover powerful mantras and meditation techniques to align your chakras and connect with cosmic
+                    consciousness through ancient practices.</p>
+            </div>
+
+            <div class="wisdom-card fade-in">
+                <h4>🌿 Ayurvedic Harmony</h4>
+                <p>Balance your doshas and achieve physical, mental, and spiritual wellness through ancient Ayurvedic
+                    principles and natural healing.</p>
+            </div>
+
+            <div class="wisdom-card fade-in">
+                <h4>🔥 Sacred Rituals</h4>
+                <p>Learn about powerful Vedic rituals and ceremonies that bring prosperity, peace, and spiritual growth
+                    to your life journey.</p>
+            </div>
+
+            <div class="wisdom-card fade-in">
+                <h4>📿 Divine Timing</h4>
+                <p>Understand Muhurat and auspicious timings for important life events based on planetary movements and
+                    cosmic alignments.</p>
+            </div>
+
+            <div class="wisdom-card fade-in">
+                <h4>🌺 Spiritual Festivals</h4>
+                <p>Celebrate sacred festivals and their spiritual significance in awakening divine consciousness and
+                    connecting with universal energy.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SUBSCRIBE -->
+    <section class="subscribe-section">
+        <h2>Subscribe for Daily Updates</h2>
+        <p>Get your daily horoscope and personalized insights delivered to your inbox.</p>
+        <form class="subscribe-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
 </main>
 
 <!-- FOOTER -->
