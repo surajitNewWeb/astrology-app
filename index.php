@@ -12,19 +12,29 @@ require_once __DIR__ . '/includes/navbar.php';
         /* deeper cosmic navy */
         color: #e5e7eb;
         /* softer off-white */
-  background: #090f23ff url("https://www.transparenttextures.com/patterns/stardust.png");
-  animation: moveStars 60s linear infinite;
+        background: #090f23ff url("https://www.transparenttextures.com/patterns/stardust.png");
+        animation: moveStars 60s linear infinite;
+    }
+     @keyframes moveStars {
+        from {
+            background-position: 0 0;
+        }
+
+        to {
+            background-position: 10000px 5000px;
+        }
     }
 
     a {
         text-decoration: none;
     }
 
-       main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 20px;
+    main {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
     }
+
     /* --- HERO SECTION --- */
     .hero {
         position: relative;
@@ -60,7 +70,7 @@ require_once __DIR__ . '/includes/navbar.php';
         z-index: 2;
         max-width: 1100px;
         width: 100%;
-        background: rgba(255, 255, 255, 0.08);
+        background: #090f234f;
         border-radius: 28px;
         padding: 40px;
         display: flex;
@@ -237,20 +247,6 @@ require_once __DIR__ . '/includes/navbar.php';
         position: relative;
         z-index: 2;
     }
-
-    /* --- STAR ANIMATION BG --- */
-    .stars {
-  position: absolute;
-  inset: 0;
-  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png");
-  animation: moveStars 60s linear infinite;
-  opacity: 0.5;
-  z-index: 1;
-}
-    @keyframes moveStars {
-  from { background-position: 0 0; }
-  to { background-position: 10000px 5000px; }
-}
 
     /* --- ROW --- */
     .astro-row {
@@ -786,9 +782,9 @@ require_once __DIR__ . '/includes/navbar.php';
             </p>
 
             <div class="cta-row">
-                <button class="btn-cta btn-primary" onclick="location.href='horoscope.php'">Get My Horoscope</button>
-                <button class="btn-cta btn-outline" onclick="location.href='kundli.php'">Generate Kundli</button>
-                <button class="btn-cta btn-solid" onclick="location.href='matchmaking.php'">Matchmaking</button>
+                <button class="btn-cta btn-primary" onclick="location.href='public/horoscope.php'">Get My Horoscope</button>
+                <button class="btn-cta btn-outline" onclick="location.href='public/kundli.php'">Generate Kundli</button>
+                <button class="btn-cta btn-solid" onclick="location.href='public/matchmaking.php'">Matchmaking</button>
             </div>
 
             <div class="quick-features">
@@ -874,34 +870,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         birth chart and your astrology sign. We have the world famous astrologers on
                         the best astrology website in India, practicing both Indian & Western astrology.
                     </p>
-                    <button class="btn-orange">Read More</button>
+                    <a class="btn-orange" href="public/service.php">Read More</a>
                 </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="testimonials">
-        <h2 class="section-title">What People Say ✨</h2>
-        <div class="d-flex flex-wrap justify-content-center">
-
-            <div class="testimonial-card col-md-3">
-                <img src="./public/assets/images/priya.jpg" alt="Priya" class="testimonial-img">
-                <p>"AstroGuide gave me clarity about my career choices. Spot on!"</p>
-                <strong>– Priya, Mumbai</strong>
-            </div>
-
-            <div class="testimonial-card col-md-3">
-                <img src="./public/assets/images/rahul.jpg" alt="Rahul" class="testimonial-img">
-                <p>"The Kundli generator is beautiful & accurate. Love the design!"</p>
-                <strong>– Rahul, Delhi</strong>
-            </div>
-
-            <div class="testimonial-card col-md-3">
-                <img src="./public/assets/images/ayesha.jpg" alt="Ayesha" class="testimonial-img">
-                <p>"The love compatibility feature was fun and surprisingly true 😍."</p>
-                <strong>– Ayesha, Dubai</strong>
             </div>
 
         </div>
@@ -935,7 +905,7 @@ require_once __DIR__ . '/includes/navbar.php';
     <section class="services">
         <div class="services-header">
             <h2>Discover <em>Your Path</em> in the Stars with Us</h2>
-            <button class="btn-outline-green">See All Services</button>
+            <a class="btn-outline-green" href="public/service.php">See All Services</a>
         </div>
 
         <div class="services-list">
@@ -1037,7 +1007,31 @@ require_once __DIR__ . '/includes/navbar.php';
             </div>
         </div>
     </section>
+    <!-- TESTIMONIALS -->
+    <section class="testimonials">
+        <h2 class="section-title">What People Say ✨</h2>
+        <div class="d-flex flex-wrap justify-content-center">
 
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/priya.jpg" alt="Priya" class="testimonial-img">
+                <p>"AstroGuide gave me clarity about my career choices. Spot on!"</p>
+                <strong>– Priya, Mumbai</strong>
+            </div>
+
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/rahul.jpg" alt="Rahul" class="testimonial-img">
+                <p>"The Kundli generator is beautiful & accurate. Love the design!"</p>
+                <strong>– Rahul, Delhi</strong>
+            </div>
+
+            <div class="testimonial-card col-md-3">
+                <img src="./public/assets/images/ayesha.jpg" alt="Ayesha" class="testimonial-img">
+                <p>"The love compatibility feature was fun and surprisingly true 😍."</p>
+                <strong>– Ayesha, Dubai</strong>
+            </div>
+
+        </div>
+    </section>
 
     <!-- SUBSCRIBE -->
     <section class="subscribe-section">

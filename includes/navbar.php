@@ -227,6 +227,10 @@ $astrologyPages = ['horoscope.php','birthchart.php','kundli.php','matchmaking.ph
           </ul>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link <?=($current_page=='contact.php'?'active':'')?>" href="<?=$base?>/public/contact.php">Contact Us</a>
+        </li>        
+
          <!-- Dashboard (only if logged in) -->
         <?php if ($logged): ?>
         <li class="nav-item">
