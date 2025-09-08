@@ -584,7 +584,7 @@ require_once __DIR__ . '/../includes/navbar.php';
     </div>
     <div class="col-md-6">
         <div class="card-custom p-4 h-100 d-flex align-items-center justify-content-center flex-column">
-            <img src="<?=$base?>/public/assets/images/vision.jpg" alt="Vision" class="mb-3 vision-img shadow">
+            <img src="<?=$base?>/public/assets/images/vission.jpg" alt="Vision" class="mb-3 vision-img shadow">
             <h4>🚀 Our Vision</h4>
             <p>To be the leading global platform providing accurate, personalized astrology insights that inspire self-discovery, growth, and positive transformation in millions of lives.</p>
             <p class="small text-muted">We envision a world where cosmic wisdom guides every important decision, fostering harmony between individuals and the universe.</p>

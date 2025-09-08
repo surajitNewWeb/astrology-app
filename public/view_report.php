@@ -27,12 +27,22 @@ if (!$report) {
 $reportData = json_decode($report['report_data'], true);
 
 // Helper function to recursively render report data
+// Helper function to recursively render report data
 function renderReportData($data) {
     if (is_array($data)) {
         echo '<ul class="report-list">';
         foreach ($data as $key => $value) {
-            echo '<li><span class="key">' . ucwords(str_replace('_', ' ', $key)) . ':</span> ';
-            renderReportData($value); // recursion
+            // Capitalize key nicely
+            $keyFormatted = ucwords(str_replace('_', ' ', $key));
+
+            echo '<li>';
+            if (is_array($value)) {
+                echo '<span class="key">' . $keyFormatted . ':</span>';
+                renderReportData($value); // recursion for nested arrays
+            } else {
+                echo '<span class="key">' . $keyFormatted . ':</span> ';
+                echo '<span class="value">' . htmlspecialchars($value) . '</span>';
+            }
             echo '</li>';
         }
         echo '</ul>';
@@ -40,6 +50,7 @@ function renderReportData($data) {
         echo '<span class="value">' . htmlspecialchars($data) . '</span>';
     }
 }
+
 ?>
 
 <?php include_once __DIR__ . '/../includes/navbar.php'; ?>

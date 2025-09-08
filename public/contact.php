@@ -2,20 +2,10 @@
 require_once __DIR__ . '/../includes/navbar.php';
 require_once __DIR__ . '/../backend/database.php';
 
-// ---------------- DB Connection ----------------
-$host = "localhost";
-$user = "root";       // apna DB username
-$pass = "";           // apna DB password
-$db   = "astrology_app";  // apna DB name
+// ✅ create DB connection
+$db = new Database();
+$conn = $db->connect();
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-// Check connection
-if ($conn->connect_error) {
-    die("❌ Database Connection failed: " . $conn->connect_error);
-}
-
-// ---------------- Form Handling ----------------
 $success_message = '';
 $error_message = '';
 
@@ -36,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['contact_submit'])) {
             $stmt->bind_param("sssss", $name, $email, $phone, $subject, $message);
             if ($stmt->execute()) {
                 $success_message = "✅ Thank you, $name! Your message has been received.";
+                // clear fields
                 $name = $email = $phone = $subject = $message = '';
             } else {
                 $error_message = "⚠ Something went wrong while saving your message.";

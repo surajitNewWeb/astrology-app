@@ -668,7 +668,7 @@ require_once __DIR__ . '/includes/navbar.php';
             margin-top: 15px;
         }
     }
-
+/* --- ZODIAC --- */ .zodiac-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:20px; } .zodiac-item { background:#111827; padding:16px; border-radius:16px; text-align:center; transition: all 0.3s ease; border:1px solid rgba(255,255,255,0.05);} .zodiac-item:hover { transform:scale(1.05); box-shadow:0 15px 40px rgba(255,215,0,0.4); border-color:#ffd700;} .zodiac-item img { width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:8px; }
     /* --- SUBSCRIBE --- */
     .subscribe-section {
         background: #111827;
@@ -767,9 +767,10 @@ require_once __DIR__ . '/includes/navbar.php';
 
 <!-- HERO -->
 <section class="hero">
-    <video id="bg-video" autoplay muted loop playsinline poster="./public/assets/images/hero-poster.jpg">
-        <source src="./public/assets/videos/hero2.mp4" type="video/mp4">
-    </video>
+   <video id="bg-video" autoplay muted loop playsinline poster="<?=$base?>/public/assets/images/hero-poster.jpg">
+    <source src="<?=$base?>/public/assets/videos/hero2.mp4" type="video/mp4">
+</video>
+
     <div class="hero-overlay"></div>
 
     <div class="hero-panel container">
@@ -1007,6 +1008,8 @@ require_once __DIR__ . '/includes/navbar.php';
             </div>
         </div>
     </section>
+
+    <!-- ZODIAC STRIP --> <h2 class="section-title">Zodiac Signs ♈</h2> <div class="zodiac-strip"> <?php $zodiacs = ["aries"=>"Aries","taurus"=>"Taurus","gemini"=>"Gemini","cancer"=>"Cancer","leo"=>"Leo","virgo"=>"Virgo","libra"=>"Libra","scorpio"=>"Scorpio","sagittarius"=>"Sagittarius","capricorn"=>"Capricorn","aquarius"=>"Aquarius","pisces"=>"Pisces"]; foreach($zodiacs as $file=>$name){ echo "<div class='zodiac-item'><img src='./public/assets/images/zodiac-icons/$file.jpg' alt='$name'><div><strong style='color:#ffd700;'>$name</strong></div></div>"; } ?> </div>
     <!-- TESTIMONIALS -->
     <section class="testimonials">
         <h2 class="section-title">What People Say ✨</h2>

@@ -5,7 +5,7 @@
     <div class="row">
         <!-- Logo & About -->
         <div class="col-md-4 mb-4">
-            <a href="<?=$base?>/index.php" class="footer-logo">🌌 AstroGuide</a>
+            <a href="<?=$base?>/index.php" class="footer-logo"> <img class="logo" src="<?=$base?>/public/assets/images/astrology_logo1.png" alt="logo">Astro-Guide</a>
             <p class="mt-3">Your trusted partner for Astrology, Matchmaking, Kundli, Panchang, and future insights. 🌠</p>
             <div class="social-icons mt-3">
                 <a href="#"><i class="bi bi-facebook"></i></a>
